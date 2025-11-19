@@ -63,37 +63,55 @@ const Navigation = () => {
           {/* Mobile Navigation */}
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon" className="text-primary-foreground">
+              <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary/20">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] bg-primary/95 backdrop-blur-md text-primary-foreground">
-              <div className="flex flex-col gap-6 mt-8">
-                <div className="flex items-center gap-2 font-bold text-2xl mb-4">
-                  <Shield className="w-8 h-8" />
-                  <span>DTLA</span>
-                </div>
-                {navLinks.map((link) => (
-                  <SheetClose asChild key={link.to}>
-                    <Link 
-                      to={link.to}
-                      className="text-lg hover:text-secondary transition-colors py-2"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {link.label}
-                    </Link>
+            <SheetContent side="left" className="w-[280px] sm:w-[320px] bg-background border-r border-border p-0">
+              <div className="flex flex-col h-full">
+                {/* Header */}
+                <div className="flex items-center justify-between p-6 border-b border-border">
+                  <div className="flex items-center gap-2 font-bold text-2xl text-foreground">
+                    <Shield className="w-8 h-8 text-primary" />
+                    <span>DTLA</span>
+                  </div>
+                  <SheetClose asChild>
+                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <X className="h-5 w-5" />
+                      <span className="sr-only">Close menu</span>
+                    </Button>
                   </SheetClose>
-                ))}
-                <SheetClose asChild>
-                  <Button 
-                    variant="secondary"
-                    onClick={() => scrollToSection("report")}
-                    className="font-semibold w-full mt-4"
-                  >
-                    Report a Scam
-                  </Button>
-                </SheetClose>
+                </div>
+
+                {/* Navigation Links */}
+                <div className="flex flex-col flex-1 px-4 py-6 gap-1">
+                  {navLinks.map((link) => (
+                    <SheetClose asChild key={link.to}>
+                      <Link 
+                        to={link.to}
+                        className="text-base font-medium text-foreground hover:text-primary hover:bg-accent rounded-lg px-4 py-3 transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {link.label}
+                      </Link>
+                    </SheetClose>
+                  ))}
+                  
+                  {/* Report a Scam Button */}
+                  <SheetClose asChild>
+                    <Button 
+                      variant="secondary"
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        scrollToSection("report");
+                      }}
+                      className="font-semibold w-full mt-4"
+                    >
+                      Report a Scam
+                    </Button>
+                  </SheetClose>
+                </div>
               </div>
             </SheetContent>
           </Sheet>
